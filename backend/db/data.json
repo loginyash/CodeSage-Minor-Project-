@@ -1,0 +1,62 @@
+{
+  "lessons": [
+    {
+      "id": "lesson-1",
+      "title": "Intro to HTML",
+      "description": "Learn the building blocks of the web.",
+      "level": "beginner"
+    },
+    {
+      "id": "lesson-2",
+      "title": "CSS Fundamentals",
+      "description": "Style layouts with Flexbox and Grid.",
+      "level": "beginner"
+    },
+    {
+      "id": "lesson-3",
+      "title": "JavaScript Basics",
+      "description": "Understand variables, functions, and the DOM.",
+      "level": "intermediate"
+    },
+    {
+      "id": "lesson-4",
+      "title": "Python Programming",
+      "description": "Learn Python from scratch - variables, functions, and more.",
+      "level": "beginner"
+    },
+    {
+      "id": "lesson-5",
+      "title": "React Development",
+      "description": "Build modern web applications with React.",
+      "level": "intermediate"
+    },
+    {
+      "id": "lesson-6",
+      "title": "Node.js Backend",
+      "description": "Create server-side applications with Node.js.",
+      "level": "intermediate"
+    },
+    {
+      "id": "lesson-7",
+      "title": "SQL Database",
+      "description": "Master database queries and data management.",
+      "level": "beginner"
+    },
+    {
+      "id": "lesson-8",
+      "title": "Git & GitHub",
+      "description": "Learn version control and collaboration with Git.",
+      "level": "beginner"
+    }
+  ],
+  "feedback": [
+    {
+      "id": "031ed58c-5b0c-46f4-b14d-1eeda9e26a81",
+      "name": "Yashvardhan Acharya ",
+      "email": "yashacharya2099@gmail.com",
+      "message": "test",
+      "createdAt": "2025-11-17T19:22:04.051Z"
+    }
+  ],
+  "users": []
+}
