@@ -33,8 +33,9 @@ Fill in these settings:
 
 - **Name**: `learn-code-cheer-backend`
 - **Environment**: `Node`
-- **Build Command**: `cd backend && npm install && npm run build`
-- **Start Command**: `cd backend && npm start`
+- **Root Directory**: `backend` ⚠️ **IMPORTANT - This fixes the error!**
+- **Build Command**: `npm install && npm run build`
+- **Start Command**: `npm start`
 - **Plan**: `Free`
 
 ### 1.4 Add Environment Variables
