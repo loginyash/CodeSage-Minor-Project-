@@ -39,7 +39,7 @@ const HeroSection = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="#lessons">
+              <Link to="/paths">
                 <Button size="lg" className="gap-2 bg-primary hover:bg-primary/90 shadow-glow transition-all hover:scale-105">
                   <Play className="h-5 w-5" />
                   Start Learning Today
