@@ -72,9 +72,9 @@ const HeroSection = () => {
           >
             <div className="absolute -inset-4 bg-gradient-to-r from-primary to-purple-600 rounded-full blur-3xl opacity-20 animate-pulse" />
             <img
-              src="https://images.unsplash.com/photo-1614741118868-4075801dd0ea?w=800&auto=format&fit=crop&q=60"
-              alt="Futuristic Coding Setup"
-              className="relative rounded-2xl shadow-2xl border border-white/10 w-full max-w-md mx-auto float"
+              src="https://images.unsplash.com/photo-1635805737707-575885ab0820?w=800&auto=format&fit=crop&q=60"
+              alt="Code Sage Superhero"
+              className="relative rounded-2xl shadow-2xl border border-white/10 w-full max-w-md mx-auto float mix-blend-lighten"
             />
           </motion.div>
         </div>
