@@ -22,7 +22,7 @@ export const chatWithAI = async (req: Request, res: Response) => {
             });
         }
 
-        const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
         const chat = model.startChat({
             history: [
