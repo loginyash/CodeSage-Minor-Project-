@@ -71,7 +71,7 @@ const HeroSection = () => {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            <div className="absolute -inset-4 bg-gradient-to-r from-primary to-purple-600 rounded-full blur-3xl opacity-20 animate-pulse" />
+            <div className="absolute -inset-4 bg-gradient-to-r from-primary to-purple-600 rounded-full blur-3xl opacity-5" />
             <img
               src={heroImage}
               alt="Code Sage Superhero with < > Crest"
