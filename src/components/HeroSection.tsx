@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Play, BookOpen, Users } from "lucide-react";
 import { motion } from "framer-motion";
+import heroImage from "@/assets/hero-superhero.png";
 
 const HeroSection = () => {
   return (
@@ -72,9 +73,9 @@ const HeroSection = () => {
           >
             <div className="absolute -inset-4 bg-gradient-to-r from-primary to-purple-600 rounded-full blur-3xl opacity-20 animate-pulse" />
             <img
-              src="https://images.unsplash.com/photo-1635805737707-575885ab0820?w=800&auto=format&fit=crop&q=60"
+              src={heroImage}
               alt="Code Sage Superhero with < > Crest"
-              className="relative rounded-2xl shadow-2xl border border-white/10 w-full max-w-md mx-auto float mix-blend-lighten"
+              className="relative w-full max-w-md mx-auto float mix-blend-lighten"
             />
           </motion.div>
         </div>

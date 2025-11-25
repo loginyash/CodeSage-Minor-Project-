@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Lightbulb, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 const tips = [
     "💡 Tip: Break complex problems into smaller, manageable steps.",
@@ -29,27 +28,38 @@ const DailyTip = () => {
         <AnimatePresence>
             {isVisible && (
                 <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 50 }}
-                    className="fixed bottom-6 right-6 z-50 max-w-sm"
+                    initial={{ opacity: 0, x: -50, scale: 0.9 }}
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
+                    exit={{ opacity: 0, x: -50, scale: 0.9 }}
+                    className="fixed bottom-6 left-6 z-40 max-w-sm"
                 >
-                    <div className="glass-panel p-4 rounded-xl border-l-4 border-l-yellow-400 shadow-2xl flex items-start gap-3">
-                        <div className="p-2 bg-yellow-400/10 rounded-full text-yellow-400 shrink-0">
-                            <Lightbulb className="h-5 w-5" />
+                    <div className="glass-panel p-4 rounded-xl border-l-4 border-primary shadow-lg relative overflow-hidden group">
+                        <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                        <div className="flex items-start gap-3 relative z-10">
+                            <div className="p-2 bg-primary/20 rounded-lg">
+                                <Lightbulb className="w-5 h-5 text-primary animate-pulse" />
+                            </div>
+
+                            <div className="flex-1">
+                                <h3 className="font-bold text-sm mb-1 flex items-center gap-2">
+                                    Daily Wisdom
+                                    <span className="text-[10px] bg-primary/20 px-1.5 py-0.5 rounded text-primary-foreground">
+                                        Tip #{Math.floor(Math.random() * 100)}
+                                    </span>
+                                </h3>
+                                <p className="text-sm text-muted-foreground leading-relaxed">
+                                    {tip}
+                                </p>
+                            </div>
+
+                            <button
+                                onClick={() => setIsVisible(false)}
+                                className="text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                <X className="w-4 h-4" />
+                            </button>
                         </div>
-                        <div className="flex-1">
-                            <h4 className="font-semibold text-sm mb-1 text-yellow-400">Daily Wisdom</h4>
-                            <p className="text-sm text-muted-foreground">{tip}</p>
-                        </div>
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-6 w-6 -mt-1 -mr-1 text-muted-foreground hover:text-foreground"
-                            onClick={() => setIsVisible(false)}
-                        >
-                            <X className="h-4 w-4" />
-                        </Button>
                     </div>
                 </motion.div>
             )}
