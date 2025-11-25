@@ -12,6 +12,9 @@ import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
+import Community from "./pages/Community";
+import LearningPaths from "./pages/LearningPaths";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -28,6 +31,8 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/community" element={<Community />} />
+            <Route path="/paths" element={<LearningPaths />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

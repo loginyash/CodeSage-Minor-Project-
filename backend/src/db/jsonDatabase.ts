@@ -3,14 +3,20 @@ import path from "node:path";
 import { DataStore } from "../models/dataStore.js";
 import { Feedback } from "../models/feedback.js";
 import { User } from "../models/user.js";
+import { Post } from "../models/post.js";
 
 const DATA_PATH = path.resolve(process.cwd(), "db", "data.json");
 
 const ensureDataFile = async (): Promise<void> => {
   try {
-    await readFile(DATA_PATH, "utf-8");
+    const raw = await readFile(DATA_PATH, "utf-8");
+    const data = JSON.parse(raw);
+    if (!data.posts) {
+      data.posts = [];
+      await writeFile(DATA_PATH, JSON.stringify(data, null, 2), "utf-8");
+    }
   } catch {
-    const fallback: DataStore = { lessons: [], feedback: [], users: [] };
+    const fallback: DataStore = { lessons: [], feedback: [], users: [], posts: [] };
     await writeFile(DATA_PATH, JSON.stringify(fallback, null, 2), "utf-8");
   }
 };
@@ -55,4 +61,17 @@ export const updateUser = async (userId: string, updates: Partial<User>): Promis
   await writeData(data);
   const { password, ...userWithoutPassword } = data.users[userIndex];
   return userWithoutPassword as User;
+};
+
+export const createPost = async (post: Post): Promise<Post> => {
+  const data = await readData();
+  if (!data.posts) data.posts = [];
+  data.posts.unshift(post); // Add new posts to the beginning
+  await writeData(data);
+  return post;
+};
+
+export const getPosts = async (): Promise<Post[]> => {
+  const data = await readData();
+  return data.posts || [];
 };

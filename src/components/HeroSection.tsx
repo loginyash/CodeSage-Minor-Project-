@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Play, BookOpen, Users } from "lucide-react";
-import heroImage from "@/assets/hero-coding.jpg";
 import { motion } from "framer-motion";
 
 const HeroSection = () => {
@@ -71,13 +70,11 @@ const HeroSection = () => {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            <div className="absolute inset-0 bg-gradient-to-tr from-primary/30 to-purple-500/30 rounded-3xl blur-3xl animate-pulse"></div>
-            <motion.img
-              animate={{ y: [-10, 10, -10] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              src={heroImage}
-              alt="Students learning to code together"
-              className="relative rounded-3xl shadow-2xl border border-white/10 w-full object-cover aspect-video"
+            <div className="absolute -inset-4 bg-gradient-to-r from-primary to-purple-600 rounded-full blur-3xl opacity-20 animate-pulse" />
+            <img
+              src="https://images.unsplash.com/photo-1614741118868-4075801dd0ea?w=800&auto=format&fit=crop&q=60"
+              alt="Futuristic Coding Setup"
+              className="relative rounded-2xl shadow-2xl border border-white/10 w-full max-w-md mx-auto float"
             />
           </motion.div>
         </div>
