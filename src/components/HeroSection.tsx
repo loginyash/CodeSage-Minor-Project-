@@ -32,55 +32,37 @@ const HeroSection = () => {
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-500">Confidence</span>
               </h1>
 
-              <p className="text-xl text-muted-foreground leading-relaxed max-w-lg">
-                Hi there, future developer! 👋 I'm CodeSage, your friendly coding mentor.
-                Let's make learning to code fun, encouraging, and totally achievable.
-              </p>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/paths">
-                <Button size="lg" className="gap-2 bg-primary hover:bg-primary/90 shadow-glow transition-all hover:scale-105">
-                  <Play className="h-5 w-5" />
-                  Start Learning Today
-                </Button>
-              </Link>
-              <Link to="/progress">
-                <Button size="lg" variant="outline" className="gap-2 border-primary/20 hover:bg-primary/10 transition-all hover:scale-105">
-                  <BookOpen className="h-5 w-5" />
-                  View Progress
-                </Button>
-              </Link>
-            </div>
-
-            <div className="flex items-center gap-6 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <Users className="h-4 w-4 text-primary" />
-                <span>50,000+ happy learners</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-yellow-500">⭐</span>
-                <span>4.9/5 student rating</span>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            className="relative"
-          >
-            <div className="absolute -inset-4 bg-gradient-to-r from-primary to-purple-600 rounded-full blur-3xl opacity-5" />
-            <img
-              src={heroImage}
-              alt="Code Sage Superhero with < > Crest"
-              className="relative w-full max-w-md mx-auto float mix-blend-lighten"
-            />
-          </motion.div>
+            </Link>
         </div>
-      </div>
-    </section>
+
+        <div className="flex items-center gap-6 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <Users className="h-4 w-4 text-primary" />
+            <span>50,000+ happy learners</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-yellow-500">⭐</span>
+            <span>4.9/5 student rating</span>
+          </div>
+        </div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8 }}
+        className="relative"
+      >
+        <div className="absolute -inset-4 bg-gradient-to-r from-primary to-purple-600 rounded-full blur-3xl opacity-5" />
+        <img
+          src={heroImage}
+          alt="Code Sage Superhero with < > Crest"
+          className="relative w-full max-w-md mx-auto float mix-blend-lighten"
+        />
+      </motion.div>
+    </div>
+      </div >
+    </section >
   );
 };
 
