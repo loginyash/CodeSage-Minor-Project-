@@ -1,6 +1,6 @@
 import { Post } from "@/types/api";
 
-const API_URL = "http://localhost:5000/api/community";
+const API_URL = (import.meta.env.VITE_API_URL || "") + "/api/community";
 
 export const getPosts = async (): Promise<Post[]> => {
     const response = await fetch(API_URL);

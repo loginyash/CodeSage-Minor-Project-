@@ -1,9 +1,9 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { DataStore } from "../models/dataStore.js";
-import { Feedback } from "../models/feedback.js";
-import { User } from "../models/user.js";
-import { Post } from "../models/post.js";
+import { DataStore } from "../models/dataStore";
+import { Feedback } from "../models/feedback";
+import { User } from "../models/user";
+import { Post } from "../models/post";
 
 const DATA_PATH = path.resolve(process.cwd(), "db", "data.json");
 

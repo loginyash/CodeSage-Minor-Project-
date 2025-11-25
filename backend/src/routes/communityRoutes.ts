@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAllPosts, createNewPost } from "../controllers/communityController.js";
+import { getAllPosts, createNewPost } from "../controllers/communityController";
 
 const router = Router();
 

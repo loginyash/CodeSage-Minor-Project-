@@ -48,7 +48,8 @@ const CodeSageBot = () => {
         setIsTyping(true);
 
         try {
-            const response = await fetch('http://localhost:3000/api/chat', {
+            const apiUrl = (import.meta.env.VITE_API_URL || "") + "/api/chat";
+            const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -123,8 +124,8 @@ const CodeSageBot = () => {
                                     >
                                         <div
                                             className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${msg.sender === "user"
-                                                    ? "bg-secondary text-secondary-foreground"
-                                                    : "bg-primary text-primary-foreground"
+                                                ? "bg-secondary text-secondary-foreground"
+                                                : "bg-primary text-primary-foreground"
                                                 }`}
                                         >
                                             {msg.sender === "user" ? (
@@ -135,8 +136,8 @@ const CodeSageBot = () => {
                                         </div>
                                         <div
                                             className={`p-3 rounded-2xl max-w-[80%] text-sm ${msg.sender === "user"
-                                                    ? "bg-secondary text-secondary-foreground rounded-tr-none"
-                                                    : "bg-muted text-muted-foreground rounded-tl-none"
+                                                ? "bg-secondary text-secondary-foreground rounded-tr-none"
+                                                : "bg-muted text-muted-foreground rounded-tl-none"
                                                 }`}
                                         >
                                             {msg.text}

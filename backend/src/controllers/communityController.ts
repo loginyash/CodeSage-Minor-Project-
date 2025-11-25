@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { createPost, getPosts } from "../db/jsonDatabase.js";
-import { Post } from "../models/post.js";
+import { createPost, getPosts } from "../db/jsonDatabase";
+import { Post } from "../models/post";
 import { v4 as uuidv4 } from "uuid";
 
 export const getAllPosts = async (
