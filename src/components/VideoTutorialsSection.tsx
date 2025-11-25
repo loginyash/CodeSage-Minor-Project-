@@ -6,6 +6,8 @@ import { getLessons } from "@/api/lessons";
 import { useEffect, useState } from "react";
 import type { Lesson } from "@/types/api";
 import { youtubePlaylists } from "@/utils/youtubePlaylists";
+import { motion } from "framer-motion";
+import VideoPlayer from "@/components/VideoPlayer";
 
 const VideoTutorialsSection = () => {
   const [lessons, setLessons] = useState<Lesson[]>([]);
@@ -27,52 +29,69 @@ const VideoTutorialsSection = () => {
   if (lessonsWithVideos.length === 0) return null;
 
   return (
-    <section className="py-20 px-4 bg-muted/30">
-      <div className="container mx-auto max-w-6xl">
+    <section className="py-20 px-4 bg-muted/5 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent pointer-events-none" />
+      <div className="container mx-auto max-w-6xl relative">
         <div className="text-center space-y-4 mb-16">
-          <h2 className="text-4xl font-bold">
-            Free <span className="gradient-hero bg-clip-text text-transparent">Video Tutorials</span>
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl font-bold"
+          >
+            Free <span className="text-gradient">Video Tutorials</span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-xl text-muted-foreground max-w-2xl mx-auto"
+          >
             Supplement your learning with these completely free video tutorial playlists from trusted
             educational channels. Perfect for visual learners! 🎥
-          </p>
+          </motion.p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {lessonsWithVideos.map((lesson) => {
+          {lessonsWithVideos.map((lesson, index) => {
             const playlist = youtubePlaylists[lesson.id];
             if (!playlist) return null;
 
             return (
-              <Card key={lesson.id} className="shadow-card hover:shadow-glow transition-all duration-300">
-                <CardHeader>
-                  <div className="flex items-center gap-2 mb-2">
-                    <Play className="h-5 w-5 text-red-500" />
-                    <CardTitle className="text-xl">{lesson.title}</CardTitle>
-                  </div>
-                  <CardDescription>{playlist.channel}</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="aspect-video bg-muted rounded-lg overflow-hidden">
-                    <iframe
-                      className="w-full h-full"
-                      src={playlist.isVideo 
-                        ? `https://www.youtube.com/embed/${playlist.playlistId}`
-                        : `https://www.youtube.com/embed/videoseries?list=${playlist.playlistId}`}
+              <motion.div
+                key={lesson.id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -5 }}
+              >
+                <Card className="glass-card h-full border-white/5">
+                  <CardHeader>
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="p-2 rounded-full bg-red-500/10 text-red-500">
+                        <Play className="h-5 w-5" />
+                      </div>
+                      <CardTitle className="text-xl">{lesson.title}</CardTitle>
+                    </div>
+                    <CardDescription>{playlist.channel}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <VideoPlayer
+                      playlistId={playlist.playlistId}
                       title={playlist.title}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
+                      isVideo={playlist.isVideo}
                     />
-                  </div>
-                  <Link to={`/lesson/${lesson.id}`}>
-                    <Button variant="outline" className="w-full gap-2">
-                      <ExternalLink className="h-4 w-4" />
-                      View Full Lesson
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
+                    <Link to={`/lesson/${lesson.id}`}>
+                      <Button variant="outline" className="w-full gap-2 border-white/10 hover:bg-white/5 hover:text-primary transition-colors">
+                        <ExternalLink className="h-4 w-4" />
+                        View Full Lesson
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              </motion.div>
             );
           })}
         </div>
