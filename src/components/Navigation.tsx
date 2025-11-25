@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -11,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { User, LogOut, Menu, X, Flame } from "lucide-react";
+import { User, LogOut, Menu, X, Flame, Code } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Navigation = () => {
@@ -35,40 +34,42 @@ const Navigation = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`fixed top - 0 left - 0 right - 0 z - 50 transition - all duration - 300 ${isScrolled ? "glass-panel border-b-0 rounded-none py-2" : "bg-transparent py-4"
-        } `}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "glass-panel border-b-0 rounded-none py-2" : "bg-transparent py-4"
+        }`}
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
           <motion.div
-            whileHover={{ rotate: 10, scale: 1.1 }}
-            className="bg-gradient-to-br from-primary to-purple-600 text-white p-2 rounded-xl shadow-lg shadow-primary/20"
+            whileHover={{ rotate: 360 }}
+            transition={{ duration: 0.5 }}
           >
-            <span className="font-bold text-xl">CS</span>
+            <Code className="h-8 w-8 text-primary" />
           </motion.div>
-          <span className="font-bold text-xl tracking-tight group-hover:text-primary transition-colors">CodeSage</span>
+          <span className="text-2xl font-bold gradient-hero bg-clip-text text-transparent group-hover:opacity-80 transition-opacity">
+            CodeSage
+          </span>
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8">
           <Link
             to="/"
-            className={`text - sm font - medium transition - colors hover: text - primary ${isActive("/") ? "text-primary" : "text-muted-foreground"
-              } `}
+            className={`text-sm font-medium transition-colors hover:text-primary ${isActive("/") ? "text-primary" : "text-muted-foreground"
+              }`}
           >
             Home
           </Link>
           <Link
             to="/paths"
-            className={`text - sm font - medium transition - colors hover: text - primary ${isActive("/paths") ? "text-primary" : "text-muted-foreground"
-              } `}
+            className={`text-sm font-medium transition-colors hover:text-primary ${isActive("/paths") ? "text-primary" : "text-muted-foreground"
+              }`}
           >
             Learning Paths
           </Link>
           <Link
             to="/community"
-            className={`text - sm font - medium transition - colors hover: text - primary ${isActive("/community") ? "text-primary" : "text-muted-foreground"
-              } `}
+            className={`text-sm font-medium transition-colors hover:text-primary ${isActive("/community") ? "text-primary" : "text-muted-foreground"
+              }`}
           >
             Community
           </Link>
