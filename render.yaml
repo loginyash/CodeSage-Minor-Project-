@@ -1,14 +1,26 @@
 services:
+  # Backend Service
   - type: web
-    name: learn-code-cheer-backend
-    env: node
+    name: code-sage-backend
+    env: python
+    region: singapore
     plan: free
-    rootDir: backend
-    buildCommand: npm install && npm run build
-    startCommand: npm start
+    buildCommand: cd backend && pip install -r requirements.txt
+    startCommand: cd backend && gunicorn run:app
     envVars:
-      - key: NODE_ENV
+      - key: FLASK_ENV
         value: production
-      - key: PORT
-        value: 4000
+      - key: PYTHON_VERSION
+        value: 3.9.0
 
+  # Frontend Service
+  - type: web
+    name: code-sage-frontend
+    env: node
+    region: singapore
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm run preview
+    envVars:
+      - key: NODE_VERSION
+        value: 18.17.0
