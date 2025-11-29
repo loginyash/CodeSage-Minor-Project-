@@ -1,87 +1,67 @@
-# Code Sage: The Major Project
+# Code Sage - Major Project
 
-![Code Sage Banner](https://via.placeholder.com/1200x400?text=Code+Sage+Major+Project)
+**Submitted in partial fulfillment of the requirements for the degree of Bachelor of Technology**
 
-> **Status**: Active Development 🚀
-> **Version**: 2.0.0 (Major Project Upgrade)
+---
 
-Code Sage is a production-grade educational platform designed to help users master coding through interactive learning paths, community engagement, and AI-powered assistance.
+## 👨‍🎓 Project Team
 
-## 🌟 Key Features
+| Name | Roll Number | Role |
+|------|-------------|------|
+| [Your Name] | [Your Roll No] | Full Stack Developer |
+| [Teammate Name] | [Roll No] | Frontend Developer |
+| [Teammate Name] | [Roll No] | Backend Developer |
 
-### 1. 🧠 AI-Powered Tutor
-Integrated with **Google Gemini Pro**, Code Sage provides real-time code explanations, debugging assistance, and personalized learning tips.
+**Under the Guidance of:**
+**Prof. [Mentor Name]**
+Department of Computer Science
 
-### 2. 📊 Analytics Dashboard
-Visualize your learning progress with our "Cinematic" dashboard, featuring:
-- Learning Activity Charts
-- Daily Usage Stats
-- System Health Monitoring
+---
 
-### 3. 🎨 Cinematic UI/UX
-A completely redesigned "Melancholic/Cyberpunk" aesthetic using **TailwindCSS** and **Framer Motion**, offering a premium dark mode experience.
+## 📖 Abstract
 
-### 4. 🛡️ Robust Architecture
-- **Backend**: Python/Flask (Clean Architecture)
-- **Frontend**: React + Vite + TypeScript
-- **Database**: SQLite (Dev) / PostgreSQL (Prod)
-- **Containerization**: Docker support
+Code Sage is an interactive e-learning platform designed to democratize coding education. It addresses the gap in personalized learning by integrating an AI-powered tutor, interactive coding environments, and gamified learning paths. The project aims to provide a comprehensive solution for students to learn, practice, and master programming languages.
 
-## 🛠️ Tech Stack
+## 🚀 Features
 
-- **Frontend**: React 18, Vite, TailwindCSS, Framer Motion, Recharts, Lucide Icons.
-- **Backend**: Flask, SQLAlchemy, Marshmallow, Google Generative AI.
-- **DevOps**: Docker, GitHub Actions (Planned).
+-   **Interactive Code Editor**: A full-featured, browser-based IDE supporting Python, JavaScript, C++, and Java.
+-   **AI Personal Tutor**: Integrated Gemini Pro AI for real-time doubt clearance and code explanation.
+-   **Gamified Learning**: Progress tracking, badges, and daily streaks to maintain motivation.
+-   **Video Tutorials**: Curated video content for visual learners.
+-   **Community Forum**: A space for peer-to-peer learning and discussion.
 
-## 🚀 Getting Started
+## 🛠️ Technology Stack
 
-### Prerequisites
-- Node.js 18+
-- Python 3.9+
+-   **Frontend**: React.js, TypeScript, Tailwind CSS
+-   **Backend**: Python (Flask)
+-   **Database**: SQLite (Prototype) / PostgreSQL
+-   **AI Integration**: Google Gemini API
+-   **Authentication**: Google Firebase
 
-### Installation
+## ⚙️ Setup Instructions
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/code-sage.git
-   cd code-sage
-   ```
+1.  **Clone the Repo**:
+    ```bash
+    git clone https://github.com/your-username/code-sage.git
+    ```
+2.  **Backend Setup**:
+    ```bash
+    cd backend
+    pip install -r requirements.txt
+    python run.py
+    ```
+3.  **Frontend Setup**:
+    ```bash
+    npm install
+    npm run dev
+    ```
 
-2. **Backend Setup**
-   ```bash
-   cd backend
-   pip install -r requirements.txt
-   python run.py
-   ```
+## 📝 Future Scope
 
-3. **Frontend Setup**
-   ```bash
-   # In a new terminal
-   npm install
-   npm run dev
-   ```
+-   Integration of a compiler for more languages.
+-   Mobile application development.
+-   Peer programming features.
 
-4. **Environment Variables**
-   Create a `.env` file in `backend/` with:
-   ```env
-   FLASK_APP=run.py
-   FLASK_ENV=development
-   SECRET_KEY=your-secret-key
-   GEMINI_API_KEY=your-gemini-api-key
-   ```
-
-## 📸 Screenshots
-
-*(Screenshots to be added after final verification)*
-
-## 🤝 Contributing
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
+---
+*Department of Computer Science & Engineering*
+*2025*

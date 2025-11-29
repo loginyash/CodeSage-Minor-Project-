@@ -5,6 +5,8 @@ import VideoTutorialsSection from "@/components/VideoTutorialsSection";
 import EncouragementSection from "@/components/EncouragementSection";
 import DailyTip from "@/components/DailyTip";
 import CodeSageBot from "@/components/CodeSageBot";
+import TeamSection from "@/components/TeamSection";
+import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
@@ -16,6 +18,8 @@ const Index = () => {
       <LearningPaths />
       <VideoTutorialsSection />
       <EncouragementSection />
+      <TeamSection />
+      <Footer />
     </div>
   );
 };
