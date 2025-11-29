@@ -67,6 +67,13 @@ const Navigation = () => {
             Learning Paths
           </Link>
           <Link
+            to="/analytics"
+            className={`text-sm font-medium transition-colors hover:text-primary ${isActive("/analytics") ? "text-primary" : "text-muted-foreground"
+              }`}
+          >
+            Analytics
+          </Link>
+          <Link
             to="/community"
             className={`text-sm font-medium transition-colors hover:text-primary ${isActive("/community") ? "text-primary" : "text-muted-foreground"
               }`}
@@ -144,20 +151,6 @@ const Navigation = () => {
             <nav className="flex flex-col p-4 gap-4">
               <Link
                 to="/"
-                className="text-sm font-medium p-2 hover:bg-white/5 rounded-lg"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Home
-              </Link>
-              <Link
-                to="/paths"
-                className="text-sm font-medium p-2 hover:bg-white/5 rounded-lg"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Learning Paths
-              </Link>
-              <Link
-                to="/community"
                 className="text-sm font-medium p-2 hover:bg-white/5 rounded-lg"
                 onClick={() => setIsMobileMenuOpen(false)}
               >

@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowLeft, CheckCircle2, Clock, BookOpen, Code } from "lucide-react";
 import { getLessons } from "@/api/lessons";
 import type { Lesson } from "@/types/api";
 import Navigation from "@/components/Navigation";
 import YouTubePlaylist from "@/components/YouTubePlaylist";
-import { youtubePlaylists, getPlaylistByTopic } from "@/utils/youtubePlaylists";
+import CodeEditorWindow from "@/components/Editor/CodeEditorWindow";
 
 const LessonDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -23,9 +24,9 @@ const LessonDetail = () => {
       try {
         setIsLoading(true);
         const lessons = await getLessons();
-        const found = lessons.find((l) => l.id === id);
+        const found = lessons.find((l) => l.id === String(id));
         setLesson(found || null);
-        
+
         // Check if lesson is completed
         const completedLessons = JSON.parse(localStorage.getItem("completedLessons") || "[]");
         setCompleted(completedLessons.includes(id));
@@ -85,13 +86,10 @@ const LessonDetail = () => {
 
   const difficultyKey = lesson.level.toLowerCase() as keyof typeof difficultyColors;
 
-  // Get YouTube playlist for this lesson
-  const playlist = id ? youtubePlaylists[id] || getPlaylistByTopic(lesson.title) : null;
-
   return (
     <div className="min-h-screen">
       <Navigation />
-      <div className="container mx-auto max-w-4xl px-4 py-32">
+      <div className="container mx-auto max-w-7xl px-4 py-32">
         <Button
           variant="ghost"
           onClick={() => navigate("/")}
@@ -120,94 +118,109 @@ const LessonDetail = () => {
             </div>
           </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <BookOpen className="h-5 w-5" />
-                Lesson Content
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="prose prose-slate dark:prose-invert max-w-none">
-                <h3>Introduction</h3>
-                <p>
-                  Welcome to {lesson.title}! This lesson will guide you through the fundamentals
-                  and help you build a solid foundation. Take your time, practice along the way,
-                  and remember - every expert was once a beginner!
-                </p>
+          <Tabs defaultValue="lesson" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-8">
+              <TabsTrigger value="lesson">Lesson Content</TabsTrigger>
+              <TabsTrigger value="editor">Code Playground</TabsTrigger>
+            </TabsList>
 
-                <h3>What You'll Learn</h3>
-                <ul>
-                  <li>Core concepts and principles</li>
-                  <li>Practical examples and exercises</li>
-                  <li>Best practices and tips</li>
-                  <li>Real-world applications</li>
-                </ul>
+            <TabsContent value="lesson" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <BookOpen className="h-5 w-5" />
+                    Lesson Content
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="prose prose-slate dark:prose-invert max-w-none">
+                    <h3>Introduction</h3>
+                    <p>
+                      Welcome to {lesson.title}! This lesson will guide you through the fundamentals
+                      and help you build a solid foundation. Take your time, practice along the way,
+                      and remember - every expert was once a beginner!
+                    </p>
 
-                <h3>Getting Started</h3>
-                <p>
-                  Ready to dive in? Follow along with the examples, try the exercises,
-                  and don't hesitate to experiment. Learning by doing is the best way to
-                  master new skills!
-                </p>
+                    <h3>What You'll Learn</h3>
+                    <ul>
+                      <li>Core concepts and principles</li>
+                      <li>Practical examples and exercises</li>
+                      <li>Best practices and tips</li>
+                      <li>Real-world applications</li>
+                    </ul>
 
-                <div className="bg-muted p-6 rounded-lg my-6">
-                  <div className="flex items-start gap-3">
-                    <Code className="h-5 w-5 text-primary mt-1" />
-                    <div>
-                      <h4 className="font-semibold mb-2">💡 Pro Tip</h4>
-                      <p className="text-sm text-muted-foreground">
-                        Take notes as you go! Writing things down helps reinforce your learning
-                        and creates a valuable reference for later.
-                      </p>
+                    <h3>Getting Started</h3>
+                    <p>
+                      Ready to dive in? Follow along with the examples, try the exercises,
+                      and don't hesitate to experiment. Learning by doing is the best way to
+                      master new skills!
+                    </p>
+
+                    <div className="bg-muted p-6 rounded-lg my-6">
+                      <div className="flex items-start gap-3">
+                        <Code className="h-5 w-5 text-primary mt-1" />
+                        <div>
+                          <h4 className="font-semibold mb-2">💡 Pro Tip</h4>
+                          <p className="text-sm text-muted-foreground">
+                            Take notes as you go! Writing things down helps reinforce your learning
+                            and creates a valuable reference for later.
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+                </CardContent>
+              </Card>
 
-          {/* YouTube Playlist */}
-          {playlist && (
-            <YouTubePlaylist
-              playlistId={playlist.playlistId}
-              title={playlist.title}
-              description={`Free tutorial from ${playlist.channel}. Perfect for visual learners!`}
-              isVideo={playlist.isVideo}
-            />
-          )}
-
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4" />
-                <span>~30 minutes</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <BookOpen className="h-4 w-4" />
-                <span>Beginner friendly</span>
-              </div>
-            </div>
-
-            <Button
-              size="lg"
-              onClick={handleComplete}
-              disabled={completed}
-              className="gap-2"
-            >
-              {completed ? (
-                <>
-                  <CheckCircle2 className="h-5 w-5" />
-                  Lesson Completed!
-                </>
-              ) : (
-                <>
-                  <CheckCircle2 className="h-5 w-5" />
-                  Mark as Complete
-                </>
+              {/* YouTube Playlist */}
+              {lesson.videoUrl && (
+                <YouTubePlaylist
+                  playlistId={lesson.videoUrl}
+                  title={lesson.title}
+                  description={`Free tutorial for ${lesson.title}. Perfect for visual learners!`}
+                  isVideo={lesson.isVideo}
+                />
               )}
-            </Button>
-          </div>
+
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-4 w-4" />
+                    <span>~30 minutes</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <BookOpen className="h-4 w-4" />
+                    <span>Beginner friendly</span>
+                  </div>
+                </div>
+
+                <Button
+                  size="lg"
+                  onClick={handleComplete}
+                  disabled={completed}
+                  className="gap-2"
+                >
+                  {completed ? (
+                    <>
+                      <CheckCircle2 className="h-5 w-5" />
+                      Lesson Completed!
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle2 className="h-5 w-5" />
+                      Mark as Complete
+                    </>
+                  )}
+                </Button>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="editor">
+              <div className="h-[800px] border rounded-lg overflow-hidden bg-background/50 backdrop-blur">
+                <CodeEditorWindow height="100%" />
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </div>
@@ -215,4 +228,3 @@ const LessonDetail = () => {
 };
 
 export default LessonDetail;
-

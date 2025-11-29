@@ -2,10 +2,12 @@ export interface Lesson {
   id: string;
   title: string;
   description: string;
-  difficulty: "Beginner" | "Intermediate" | "Advanced";
+  level: "Beginner" | "Intermediate" | "Advanced";
   duration: string;
   category: string;
   completed?: boolean;
+  videoUrl?: string;
+  isVideo?: boolean;
 }
 
 export interface CreateFeedbackPayload {

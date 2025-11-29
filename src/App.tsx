@@ -11,16 +11,17 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
-
-import Community from "./pages/Community";
-import LearningPaths from "./pages/LearningPaths";
+import Community from "./pages/Community"; // Added import for Community
+import LearningPaths from "./pages/LearningPaths"; // Added import for LearningPaths
+import Analytics from "./pages/Analytics"; // Added import for Analytics
+import CodeEditor from "./pages/CodeEditor"; // Added import for CodeEditor
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <TooltipProvider>
+    <TooltipProvider>
+      <AuthProvider>
         <Toaster />
         <Sonner />
         <BrowserRouter>
@@ -33,12 +34,14 @@ const App = () => (
             <Route path="/profile" element={<Profile />} />
             <Route path="/community" element={<Community />} />
             <Route path="/paths" element={<LearningPaths />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/editor" element={<CodeEditor />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
-      </TooltipProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </TooltipProvider>
   </QueryClientProvider>
 );
 

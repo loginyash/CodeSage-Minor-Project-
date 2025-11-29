@@ -5,45 +5,99 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { useAuth } from "@/contexts/AuthContext";
 import Navigation from "@/components/Navigation";
-import { UserPlus, Mail, Lock, User } from "lucide-react";
+import { UserPlus, Mail, Lock, User, BookOpen, Hash, GraduationCap } from "lucide-react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Signup = () => {
   const navigate = useNavigate();
-  const { signup } = useAuth();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    rollNumber: "",
+    branch: "",
+    semester: "",
+  });
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSelectChange = (field: string, value: string) => {
+    setFormData({ ...formData, [field]: value });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
-    if (password !== confirmPassword) {
+    if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match");
       return;
     }
 
-    if (password.length < 6) {
+    if (formData.password.length < 6) {
       setError("Password must be at least 6 characters");
+      return;
+    }
+
+    if (!formData.branch || !formData.semester) {
+      setError("Please select your branch and semester");
       return;
     }
 
     setIsLoading(true);
 
     try {
-      const success = await signup(name, email, password);
-      if (success) {
-        navigate("/");
+      // 1. Create User in Firebase
+      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      const user = userCredential.user;
+      const token = await user.getIdToken();
+
+      // 2. Send Data + Token to Backend
+      const apiUrl = (import.meta.env.VITE_API_URL || "") + "/api/auth/signup-firebase";
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          uid: user.uid,
+          name: formData.name,
+          email: formData.email,
+          roll_number: formData.rollNumber,
+          branch: formData.branch,
+          semester: formData.semester
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        navigate("/login");
       } else {
-        setError("An account with this email already exists.");
+        setError(data.error || "Failed to create account in backend");
       }
-    } catch (err) {
-      setError("Something went wrong. Please try again.");
+    } catch (err: any) {
+      console.error(err);
+      if (err.code === 'auth/email-already-in-use') {
+        setError("Email already in use.");
+      } else {
+        setError("Failed to sign up with Firebase. Check your config.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -61,9 +115,7 @@ const Signup = () => {
               </div>
             </div>
             <CardTitle className="text-2xl">Create an account</CardTitle>
-            <CardDescription>
-              Start your coding journey today
-            </CardDescription>
+            <CardDescription>Join Code Sage with Firebase Auth</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -77,16 +129,7 @@ const Signup = () => {
                 <Label htmlFor="name">Full Name</Label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    id="name"
-                    type="text"
-                    placeholder="John Doe"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="pl-10"
-                    required
-                    disabled={isLoading}
-                  />
+                  <Input id="name" value={formData.name} onChange={handleInputChange} className="pl-10" required disabled={isLoading} />
                 </div>
               </div>
 
@@ -94,16 +137,48 @@ const Signup = () => {
                 <Label htmlFor="email">Email</Label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10"
-                    required
-                    disabled={isLoading}
-                  />
+                  <Input id="email" type="email" value={formData.email} onChange={handleInputChange} className="pl-10" required disabled={isLoading} />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="rollNumber">Roll Number</Label>
+                <div className="relative">
+                  <Hash className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input id="rollNumber" value={formData.rollNumber} onChange={handleInputChange} className="pl-10" required disabled={isLoading} />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="branch">Branch</Label>
+                  <Select onValueChange={(value) => handleSelectChange("branch", value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Branch" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="CSE">CSE</SelectItem>
+                      <SelectItem value="ECE">ECE</SelectItem>
+                      <SelectItem value="ME">ME</SelectItem>
+                      <SelectItem value="CE">CE</SelectItem>
+                      <SelectItem value="AI&DS">AI & DS</SelectItem>
+                      <SelectItem value="IT">IT</SelectItem>
+                      <SelectItem value="EE">EE</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="semester">Semester</Label>
+                  <Select onValueChange={(value) => handleSelectChange("semester", value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Sem" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {[1, 2, 3, 4, 5, 6, 7, 8].map((sem) => (
+                        <SelectItem key={sem} value={sem.toString()}>{sem}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
 
@@ -111,16 +186,7 @@ const Signup = () => {
                 <Label htmlFor="password">Password</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    id="password"
-                    type="password"
-                    placeholder="At least 6 characters"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10"
-                    required
-                    disabled={isLoading}
-                  />
+                  <Input id="password" type="password" value={formData.password} onChange={handleInputChange} className="pl-10" required disabled={isLoading} />
                 </div>
               </div>
 
@@ -128,21 +194,12 @@ const Signup = () => {
                 <Label htmlFor="confirmPassword">Confirm Password</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    id="confirmPassword"
-                    type="password"
-                    placeholder="Confirm your password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="pl-10"
-                    required
-                    disabled={isLoading}
-                  />
+                  <Input id="confirmPassword" type="password" value={formData.confirmPassword} onChange={handleInputChange} className="pl-10" required disabled={isLoading} />
                 </div>
               </div>
 
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "Creating account..." : "Create Account"}
+                {isLoading ? "Creating Account..." : "Sign Up"}
               </Button>
 
               <div className="text-center text-sm text-muted-foreground">
@@ -160,6 +217,3 @@ const Signup = () => {
 };
 
 export default Signup;
-
-
-
