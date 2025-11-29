@@ -24,12 +24,12 @@ const LessonDetail = () => {
       try {
         setIsLoading(true);
         const lessons = await getLessons();
-        const found = lessons.find((l) => l.id === String(id));
+        const found = lessons.find((l) => String(l.id) === id);
         setLesson(found || null);
 
         // Check if lesson is completed
         const completedLessons = JSON.parse(localStorage.getItem("completedLessons") || "[]");
-        setCompleted(completedLessons.includes(id));
+        setCompleted(completedLessons.includes(String(id)));
       } catch (error) {
         console.error("Failed to load lesson:", error);
       } finally {
