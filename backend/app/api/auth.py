@@ -103,6 +103,34 @@ def signup_firebase():
         db.session.rollback()
         return jsonify({'error': f'Registration failed: {str(e)}'}), 500
 
+@auth_bp.route('/firebase-status', methods=['GET'])
+def firebase_status():
+    """Debug endpoint to check Firebase configuration status"""
+    try:
+        is_initialized = bool(firebase_admin._apps)
+        app_name = firebase_admin.get_app().name if is_initialized else "None"
+        
+        # Check env vars presence (masked)
+        env_vars = {
+            "FIREBASE_PROJECT_ID": bool(os.getenv("FIREBASE_PROJECT_ID")),
+            "FIREBASE_PRIVATE_KEY": bool(os.getenv("FIREBASE_PRIVATE_KEY")),
+            "FIREBASE_CLIENT_EMAIL": bool(os.getenv("FIREBASE_CLIENT_EMAIL")),
+        }
+        
+        return jsonify({
+            "status": "online",
+            "firebase_initialized": is_initialized,
+            "app_name": app_name,
+            "env_vars_present": env_vars,
+            "message": "Firebase is initialized" if is_initialized else "Firebase is NOT initialized"
+        }), 200
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "error": str(e),
+            "message": "Failed to check Firebase status"
+        }), 500
+
 @auth_bp.route('/login', methods=['POST'])
 def login():
     # ... (Keep existing login for now, or switch to Firebase login on frontend + verify token here)
