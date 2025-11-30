@@ -38,7 +38,7 @@ def signup_firebase():
              return jsonify({'error': 'Token email does not match provided email'}), 400
         
         if User.query.filter_by(email=data.get('email')).first():
-            return jsonify({'error': 'Email already registered'}), 400
+            return jsonify({'error': 'Email already registered in our system'}), 400
             
         user = User(
             username=data.get('name'),
@@ -59,9 +59,19 @@ def signup_firebase():
             'email': user.email
         }}), 201
         
+    except auth.InvalidIdTokenError as e:
+        print(f"Invalid Token Error: {e}")
+        return jsonify({'error': 'Invalid authentication token'}), 401
+    except auth.ExpiredIdTokenError as e:
+        print(f"Expired Token Error: {e}")
+        return jsonify({'error': 'Authentication token has expired'}), 401
+    except ValueError as e:
+        print(f"Token Value Error: {e}")
+        return jsonify({'error': 'Invalid token format'}), 401
     except Exception as e:
         print(f"Signup Error: {e}")
-        return jsonify({'error': 'Invalid token or registration failed'}), 401
+        db.session.rollback()
+        return jsonify({'error': f'Registration failed: {str(e)}'}), 500
 
 @auth_bp.route('/login', methods=['POST'])
 def login():

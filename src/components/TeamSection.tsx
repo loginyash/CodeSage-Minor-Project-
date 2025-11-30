@@ -2,41 +2,19 @@ import { Github, Linkedin, Twitter } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-const teamMembers = [
-    {
-        name: "Student Developer 1",
-        role: "Full Stack Developer",
-        bio: "Passionate about building scalable web applications and AI integration.",
-        avatar: "https://github.com/shadcn.png",
-        social: {
-            github: "#",
-            linkedin: "#",
-            twitter: "#",
-        },
-    },
-    {
-        name: "Student Developer 2",
-        role: "Frontend Specialist",
-        bio: "Crafting beautiful and intuitive user experiences with React and Tailwind.",
-        avatar: "https://github.com/shadcn.png",
-        social: {
-            github: "#",
-            linkedin: "#",
-            twitter: "#",
-        },
-    },
-    {
-        name: "Student Developer 3",
-        role: "Backend Engineer",
-        bio: "Ensuring robust API performance and secure database architecture.",
-        avatar: "https://github.com/shadcn.png",
-        social: {
-            github: "#",
-            linkedin: "#",
-            twitter: "#",
-        },
-    },
-];
+const teamMembers: Array<{
+    name: string;
+    role: string;
+    bio: string;
+    avatar: string;
+    social: {
+        github: string;
+        linkedin: string;
+        twitter: string;
+    };
+}> = [
+        // Team members removed as requested
+    ];
 
 const TeamSection = () => {
     return (

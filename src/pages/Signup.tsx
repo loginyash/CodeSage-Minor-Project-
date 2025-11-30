@@ -89,14 +89,22 @@ const Signup = () => {
       if (response.ok) {
         navigate("/login");
       } else {
-        setError(data.error || "Failed to create account in backend");
+        // If backend registration failed, delete the Firebase user to keep things in sync
+        await user.delete();
+        setError(data.error || "Failed to create account. Please try again.");
       }
     } catch (err: any) {
-      console.error(err);
+      console.error("Signup error:", err);
       if (err.code === 'auth/email-already-in-use') {
-        setError("Email already in use.");
+        setError("This email is already registered. Please try logging in instead.");
+      } else if (err.code === 'auth/weak-password') {
+        setError("Password is too weak. Please use a stronger password.");
+      } else if (err.code === 'auth/invalid-email') {
+        setError("Invalid email address.");
+      } else if (err.message && err.message.includes('token')) {
+        setError("Authentication token error. Please check your Firebase configuration.");
       } else {
-        setError("Failed to sign up with Firebase. Check your config.");
+        setError(err.message || "Failed to create account. Please try again.");
       }
     } finally {
       setIsLoading(false);
