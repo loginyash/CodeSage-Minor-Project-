@@ -84,7 +84,14 @@ const Signup = () => {
         })
       });
 
-      const data = await response.json();
+      let data;
+      try {
+        data = await response.json();
+      } catch (parseError) {
+        console.error("JSON Parse Error:", parseError);
+        // If response is not JSON, it's likely a 404/500 HTML page from Vercel/Render
+        throw new Error("Backend connection failed. Check VITE_API_URL configuration.");
+      }
 
       if (response.ok) {
         navigate("/login");
@@ -101,7 +108,8 @@ const Signup = () => {
         setError("Password is too weak. Please use a stronger password.");
       } else if (err.code === 'auth/invalid-email') {
         setError("Invalid email address.");
-      } else if (err.message && err.message.includes('token')) {
+      } else if (err.message && err.message.includes('token') && !err.message.includes('Unexpected')) {
+        // Only show token error if it's NOT a JSON parse error ("Unexpected token...")
         setError("Authentication token error. Please check your Firebase configuration.");
       } else {
         setError(err.message || "Failed to create account. Please try again.");
