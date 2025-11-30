@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import Navigation from "@/components/Navigation";
 import { UserPlus, Mail, Lock, User, BookOpen, Hash, GraduationCap } from "lucide-react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import {
   Select,
@@ -64,42 +64,55 @@ const Signup = () => {
       // 1. Create User in Firebase
       const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
       const user = userCredential.user;
-      const token = await user.getIdToken();
 
-      // 2. Send Data + Token to Backend
-      const apiUrl = (import.meta.env.VITE_API_URL || "") + "/api/auth/signup-firebase";
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          uid: user.uid,
-          name: formData.name,
-          email: formData.email,
-          roll_number: formData.rollNumber,
-          branch: formData.branch,
-          semester: formData.semester
-        })
-      });
-
-      let data;
       try {
-        data = await response.json();
-      } catch (parseError) {
-        console.error("JSON Parse Error:", parseError);
-        // If response is not JSON, it's likely a 404/500 HTML page from Vercel/Render
-        throw new Error("Backend connection failed. Check VITE_API_URL configuration.");
+        // 2. Send Verification Email
+        await sendEmailVerification(user);
+
+        // 3. Send Data + Token to Backend
+        const token = await user.getIdToken();
+        const apiUrl = (import.meta.env.VITE_API_URL || "") + "/api/auth/signup-firebase";
+
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            uid: user.uid,
+            name: formData.name,
+            email: formData.email,
+            roll_number: formData.rollNumber,
+            branch: formData.branch,
+            semester: formData.semester
+          })
+        });
+
+        let data;
+        try {
+          data = await response.json();
+        } catch (parseError) {
+          console.error("JSON Parse Error:", parseError);
+          throw new Error("Backend connection failed. Check VITE_API_URL configuration.");
+        }
+
+        if (response.ok) {
+          // Success!
+          navigate("/login");
+        } else {
+          // Backend returned an error
+          throw new Error(data.error || "Failed to create account in backend");
+        }
+
+      } catch (flowError: any) {
+        // If ANY step fails after user creation (verification email, backend fetch, json parse),
+        // we MUST delete the Firebase user to prevent "Email already in use" on retry.
+        console.error("Signup flow failed, cleaning up user:", flowError);
+        await user.delete();
+        throw flowError; // Re-throw to be handled by the outer catch block
       }
 
-      if (response.ok) {
-        navigate("/login");
-      } else {
-        // If backend registration failed, delete the Firebase user to keep things in sync
-        await user.delete();
-        setError(data.error || "Failed to create account. Please try again.");
-      }
     } catch (err: any) {
       console.error("Signup error:", err);
       if (err.code === 'auth/email-already-in-use') {
@@ -109,7 +122,6 @@ const Signup = () => {
       } else if (err.code === 'auth/invalid-email') {
         setError("Invalid email address.");
       } else if (err.message && err.message.includes('token') && !err.message.includes('Unexpected')) {
-        // Only show token error if it's NOT a JSON parse error ("Unexpected token...")
         setError("Authentication token error. Please check your Firebase configuration.");
       } else {
         setError(err.message || "Failed to create account. Please try again.");
