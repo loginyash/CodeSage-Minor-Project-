@@ -85,9 +85,9 @@ const LearningPaths = () => {
 
   const difficultyClasses = useMemo(
     () => ({
-      beginner: "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
-      intermediate: "bg-blue-500/10 text-blue-500 border-blue-500/20",
-      advanced: "bg-purple-500/10 text-purple-500 border-purple-500/20",
+      beginner: "bg-cyber-cyan/10 text-cyber-cyan border-cyber-cyan/30 shadow-[0_0_10px_rgba(0,240,255,0.2)]",
+      intermediate: "bg-cyber-yellow/10 text-cyber-yellow border-cyber-yellow/30 shadow-[0_0_10px_rgba(252,238,10,0.2)]",
+      advanced: "bg-cyber-pink/10 text-cyber-pink border-cyber-pink/30 shadow-[0_0_10px_rgba(255,0,60,0.2)]",
     }),
     []
   );
@@ -100,23 +100,24 @@ const LearningPaths = () => {
     return (
       <motion.div
         key={lesson.id}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: index * 0.1 }}
-        whileHover={{ y: -5 }}
+        initial={{ opacity: 0, scale: 0.9, y: 50 }}
+        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ delay: index * 0.1, type: "spring", stiffness: 100 }}
+        whileHover={{ y: -10 }}
       >
         <Card
-          className="glass-card h-full cursor-pointer group border-white/5"
+          className="cyber-card h-full cursor-pointer group border-white/5"
           onClick={() => navigate(`/lesson/${lesson.id}`)}
         >
-          <CardHeader className="space-y-3">
+          <CardHeader className="space-y-3 relative z-10">
             <div className="flex items-center justify-between">
-              <div className="p-2 rounded-lg bg-primary/10 text-primary w-fit group-hover:bg-primary/20 transition-colors">
+              <div className="p-2 rounded-sm bg-cyber-pink/10 text-cyber-pink border border-cyber-pink/30 shadow-[0_0_10px_rgba(255,0,60,0.2)] w-fit group-hover:bg-cyber-pink/20 transition-colors">
                 <Icon className="h-6 w-6" />
               </div>
               <div className="flex items-center gap-2">
                 {isCompleted && (
-                  <Badge variant="outline" className="gap-1 bg-green-500/10 text-green-500 border-green-500/20">
+                  <Badge variant="outline" className="gap-1 bg-green-500/10 text-green-500 border-green-500/20 shadow-[0_0_10px_rgba(34,197,94,0.2)]">
                     <CheckCircle2 className="h-3 w-3" />
                     Done
                   </Badge>
@@ -126,23 +127,23 @@ const LearningPaths = () => {
                 </Badge>
               </div>
             </div>
-            <CardTitle className="text-xl group-hover:text-primary transition-colors">{lesson.title}</CardTitle>
-            <CardDescription className="text-base line-clamp-2">{lesson.description}</CardDescription>
+            <CardTitle className="text-xl group-hover:text-cyber-cyan transition-colors uppercase tracking-wide neon-text select-none">{lesson.title}</CardTitle>
+            <CardDescription className="text-base line-clamp-2 font-mono">{lesson.description}</CardDescription>
           </CardHeader>
 
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 relative z-10">
             <div className="flex justify-between items-center mt-auto">
-              <span className="text-sm text-muted-foreground">Tailored micro-lesson</span>
+              <span className="text-sm font-mono text-cyber-yellow/70 uppercase font-bold tracking-widest">{'>'} Analyze</span>
               <Button
-                variant="ghost"
+                variant="outline"
                 size="sm"
-                className="group-hover:bg-primary group-hover:text-primary-foreground transition-all"
+                className="group-hover:bg-cyber-cyan group-hover:text-cyber-dark uppercase font-bold tracking-widest transition-all border-cyber-cyan text-cyber-cyan shadow-[0_0_10px_rgba(0,240,255,0.2)] rounded-sm"
                 onClick={(e) => {
                   e.stopPropagation();
                   navigate(`/lesson/${lesson.id}`);
                 }}
               >
-                {isCompleted ? "Review" : "Start Learning"}
+                {isCompleted ? "Review Lesson" : "Start Learning"}
               </Button>
             </div>
           </CardContent>
@@ -174,12 +175,12 @@ const LearningPaths = () => {
       <div className="container mx-auto max-w-6xl relative">
         <div className="text-center space-y-4 mb-12">
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl font-bold"
+            viewport={{ once: true, margin: "-100px" }}
+            className="text-4xl font-extrabold uppercase smooth-hover"
           >
-            Choose Your <span className="text-gradient">Learning Path</span>
+            Explore <span className="neon-text">Learning Paths</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}

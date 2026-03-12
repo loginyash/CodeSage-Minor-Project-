@@ -19,6 +19,12 @@ export default {
 		},
 		extend: {
 			colors: {
+				cyber: {
+					cyan: '#00F0FF',
+					pink: '#FF003C',
+					yellow: '#FCEE0A',
+					dark: '#050A1F',
+				},
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',

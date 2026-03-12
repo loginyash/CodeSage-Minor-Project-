@@ -4,6 +4,7 @@ import { MessageSquare, Send, X, Code, User, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { apiClient } from "@/api/apiClient";
 
 interface Message {
     id: string;
@@ -48,20 +49,14 @@ const CodeSageBot = () => {
         setIsTyping(true);
 
         try {
-            const apiUrl = (import.meta.env.VITE_API_URL || "") + "/api/chat";
-            const response = await fetch(apiUrl, {
+            const data = await apiClient<{ response?: string, reply?: string, message?: string }>("/api/chat/message", {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
                 body: JSON.stringify({ message: inputValue }),
             });
 
-            const data = await response.json();
-
             const botResponse: Message = {
                 id: (Date.now() + 1).toString(),
-                text: data.reply || data.message || "I'm having trouble connecting to my brain right now. Please try again later!",
+                text: data.response || data.reply || data.message || "I'm having trouble connecting to my brain right now. Please try again later!",
                 sender: "bot",
                 timestamp: new Date(),
             };

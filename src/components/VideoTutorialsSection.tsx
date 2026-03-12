@@ -34,22 +34,22 @@ const VideoTutorialsSection = () => {
       <div className="container mx-auto max-w-6xl relative">
         <div className="text-center space-y-4 mb-16">
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl font-bold"
+            viewport={{ once: true, margin: "-100px" }}
+            className="text-4xl font-extrabold uppercase smooth-hover"
           >
-            Free <span className="text-gradient">Video Tutorials</span>
+            Free <span className="neon-text">Video Tutorials</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-xl text-muted-foreground max-w-2xl mx-auto"
+            className="text-xl font-mono text-muted-foreground max-w-2xl mx-auto"
           >
-            Supplement your learning with these completely free video tutorial playlists from trusted
-            educational channels. Perfect for visual learners! 🎥
+            {'>'} Supplement your learning with these visual training modules. 
+            <br />{'>'} Visual learning protocols initiated. 🎥
           </motion.p>
         </div>
 
@@ -61,32 +61,32 @@ const VideoTutorialsSection = () => {
             return (
               <motion.div
                 key={lesson.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -5 }}
+                initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: index * 0.1, type: "spring" }}
+                whileHover={{ y: -10 }}
               >
-                <Card className="glass-card h-full border-white/5">
+                <Card className="cyber-card h-full border-white/5">
                   <CardHeader>
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="p-2 rounded-full bg-red-500/10 text-red-500">
+                    <div className="flex items-center gap-2 mb-2 z-10 relative">
+                      <div className="p-2 rounded-sm bg-cyber-pink/10 text-cyber-pink border border-cyber-pink/30 shadow-[0_0_10px_rgba(255,0,60,0.2)]">
                         <Play className="h-5 w-5" />
                       </div>
-                      <CardTitle className="text-xl">{lesson.title}</CardTitle>
+                      <CardTitle className="text-xl uppercase tracking-wide neon-text select-none group-hover:text-cyber-cyan transition-colors">{lesson.title}</CardTitle>
                     </div>
-                    <CardDescription>{playlist.channel}</CardDescription>
+                    <CardDescription className="z-10 relative font-mono text-muted-foreground">{playlist.channel}</CardDescription>
                   </CardHeader>
-                  <CardContent className="space-y-4">
+                  <CardContent className="space-y-4 z-10 relative">
                     <VideoPlayer
                       playlistId={playlist.playlistId}
                       title={playlist.title}
                       isVideo={playlist.isVideo}
                     />
                     <Link to={`/lesson/${lesson.id}`}>
-                      <Button variant="outline" className="w-full gap-2 border-white/10 hover:bg-white/5 hover:text-primary transition-colors">
+                      <Button variant="outline" className="w-full gap-2 border-cyber-cyan text-cyber-cyan hover:bg-cyber-cyan hover:text-cyber-dark uppercase font-bold tracking-widest shadow-[0_0_10px_rgba(0,240,255,0.2)] transition-all rounded-sm">
                         <ExternalLink className="h-4 w-4" />
-                        View Full Lesson
+                        Watch Tutorial
                       </Button>
                     </Link>
                   </CardContent>

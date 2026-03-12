@@ -56,7 +56,7 @@ const CodeEditorWindow = ({ height = "calc(100vh - 100px)" }: CodeEditorWindowPr
         setIsRunning(true);
         setOutput("");
         try {
-            const response = await axios.post("https://emkc.org/api/v2/piston/execute", {
+            const response = await axios.post("http://localhost:5000/api/execute/run", {
                 language: language,
                 version: LANGUAGES[language].version,
                 files: [

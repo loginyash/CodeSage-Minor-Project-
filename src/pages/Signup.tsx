@@ -9,6 +9,7 @@ import Navigation from "@/components/Navigation";
 import { UserPlus, Mail, Lock, User, BookOpen, Hash, GraduationCap } from "lucide-react";
 import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { auth } from "@/lib/firebase";
+import { apiClient } from "@/api/apiClient";
 import {
   Select,
   SelectContent,
@@ -69,40 +70,29 @@ const Signup = () => {
         // 2. Send Verification Email
         await sendEmailVerification(user);
 
-        // 3. Send Data + Token to Backend
+        // 3. Send Data + Token to Backend using apiClient
         const token = await user.getIdToken();
-        const apiUrl = (import.meta.env.VITE_API_URL || "") + "/api/auth/signup-firebase";
-
-        const response = await fetch(apiUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({
-            uid: user.uid,
-            name: formData.name,
-            email: formData.email,
-            roll_number: formData.rollNumber,
-            branch: formData.branch,
-            semester: formData.semester
-          })
-        });
-
-        let data;
+        
         try {
-          data = await response.json();
-        } catch (parseError) {
-          console.error("JSON Parse Error:", parseError);
-          throw new Error("Backend connection failed. Check VITE_API_URL configuration.");
-        }
+          await apiClient("/api/auth/signup-firebase", {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+              uid: user.uid,
+              name: formData.name,
+              email: formData.email,
+              roll_number: formData.rollNumber,
+              branch: formData.branch,
+              semester: formData.semester
+            })
+          });
 
-        if (response.ok) {
           // Success!
           navigate("/login");
-        } else {
-          // Backend returned an error
-          throw new Error(data.error || "Failed to create account in backend");
+        } catch (backendError: any) {
+          throw new Error(backendError.message || "Failed to create account in backend");
         }
 
       } catch (flowError: any) {

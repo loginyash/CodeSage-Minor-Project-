@@ -14,7 +14,7 @@ Follow these steps to configure Firebase Authentication for your project.
 2.  Enter an App nickname (e.g., `Code Sage Web`).
 3.  Click **Register app**.
 4.  **IMPORTANT**: You will see a code block with `firebaseConfig`. Keep this tab open or copy the `const firebaseConfig = { ... }` object. You will need this for Step 4.
-
+ 
 ## 3. Enable Authentication
 1.  In the left sidebar, click on **Build** > **Authentication**.
 2.  Click **Get started**.

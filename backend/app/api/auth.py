@@ -103,6 +103,42 @@ def signup_firebase():
         db.session.rollback()
         return jsonify({'error': f'Registration failed: {str(e)}'}), 500
 
+@auth_bp.route('/me', methods=['GET'])
+def get_current_user():
+    """Fetch the currently logged in user based on their Firebase JWT"""
+    auth_header = request.headers.get('Authorization')
+    
+    if not auth_header or not auth_header.startswith('Bearer '):
+        return jsonify({'error': 'Missing or invalid Authorization header'}), 401
+        
+    token = auth_header.split('Bearer ')[1]
+    
+    try:
+        decoded_token = auth.verify_id_token(token)
+        email = decoded_token.get('email')
+        
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            return jsonify({'error': 'User not found in database'}), 404
+            
+        return jsonify({
+            'user': {
+                'id': user.id,
+                'name': user.username,
+                'email': user.email,
+                'role': user.role,
+                'roll_number': user.roll_number,
+                'branch': user.branch,
+                'semester': user.semester,
+                'bio': user.bio,
+                'location': user.location
+            }
+        }), 200
+        
+    except Exception as e:
+        print(f"Error fetching current user: {e}")
+        return jsonify({'error': 'Invalid token or server error'}), 401
+
 @auth_bp.route('/firebase-status', methods=['GET'])
 def firebase_status():
     """Debug endpoint to check Firebase configuration status"""

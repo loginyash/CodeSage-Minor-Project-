@@ -4,27 +4,47 @@ import Navigation from "@/components/Navigation";
 import { Card } from "@/components/ui/card";
 import { Activity, Code, Users, Clock } from "lucide-react";
 
-const data = [
-    { name: "Mon", value: 4000, users: 2400 },
-    { name: "Tue", value: 3000, users: 1398 },
-    { name: "Wed", value: 2000, users: 9800 },
-    { name: "Thu", value: 2780, users: 3908 },
-    { name: "Fri", value: 1890, users: 4800 },
-    { name: "Sat", value: 2390, users: 3800 },
-    { name: "Sun", value: 3490, users: 4300 },
-];
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-const activityData = [
-    { name: "00:00", value: 20 },
-    { name: "04:00", value: 10 },
-    { name: "08:00", value: 50 },
-    { name: "12:00", value: 80 },
-    { name: "16:00", value: 90 },
-    { name: "20:00", value: 60 },
-    { name: "23:59", value: 30 },
-];
+interface AnalyticsMetrics {
+    totalLines: number;
+    activeUsers: number;
+    hoursSpent: number;
+    systemHealth: number;
+}
 
 const Analytics = () => {
+    const [data, setData] = useState<any[]>([]);
+    const [activityData, setActivityData] = useState<any[]>([]);
+    const [metrics, setMetrics] = useState<AnalyticsMetrics>({
+        totalLines: 0,
+        activeUsers: 0,
+        hoursSpent: 0,
+        systemHealth: 100
+    });
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchAnalytics = async () => {
+            try {
+                const [dataRes, activityRes] = await Promise.all([
+                    axios.get('http://localhost:5000/api/analytics/data'),
+                    axios.get('http://localhost:5000/api/analytics/activity')
+                ]);
+                
+                setData(dataRes.data.chartData || []);
+                setMetrics(dataRes.data.metrics || metrics);
+                setActivityData(activityRes.data || []);
+            } catch (err) {
+                console.error("Failed to load analytics data", err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchAnalytics();
+    }, []);
     return (
         <div className="min-h-screen bg-background text-foreground">
             <Navigation />
@@ -47,10 +67,10 @@ const Analytics = () => {
                 {/* Stats Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                     {[
-                        { title: "Total Code Lines", value: "12,450", icon: Code, color: "text-blue-400" },
-                        { title: "Active Users", value: "1,234", icon: Users, color: "text-purple-400" },
-                        { title: "Hours Spent", value: "45.2", icon: Clock, color: "text-orange-400" },
-                        { title: "System Health", value: "98%", icon: Activity, color: "text-green-400" },
+                        { title: "Total Code Lines", value: metrics.totalLines.toLocaleString(), icon: Code, color: "text-blue-400" },
+                        { title: "Active Users", value: metrics.activeUsers.toLocaleString(), icon: Users, color: "text-purple-400" },
+                        { title: "Hours Spent", value: metrics.hoursSpent.toFixed(1), icon: Clock, color: "text-orange-400" },
+                        { title: "System Health", value: `${metrics.systemHealth}%`, icon: Activity, color: "text-green-400" },
                     ].map((stat, index) => (
                         <motion.div
                             key={index}

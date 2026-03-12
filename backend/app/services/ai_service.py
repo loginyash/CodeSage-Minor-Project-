@@ -9,7 +9,7 @@ class AIService:
         
         try:
             genai.configure(api_key=api_key)
-            model = genai.GenerativeModel('gemini-pro')
+            model = genai.GenerativeModel('gemini-1.5-flash-latest')
             
             system_instruction = "You are Code Sage, an expert AI coding tutor. Explain concepts clearly, provide examples, and be encouraging."
             full_prompt = f"{system_instruction}\n\nContext: {context}\n\nUser: {prompt}\n\nCode Sage:"
