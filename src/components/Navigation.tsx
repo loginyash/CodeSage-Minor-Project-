@@ -38,9 +38,9 @@ const Navigation = () => {
 
   return (
     <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      initial={{ y: -100, filter: "blur(8px)" }}
+      animate={{ y: 0, filter: "blur(0px)" }}
+      transition={{ type: "spring", stiffness: 300, damping: 30, mass: 1 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-4 sm:px-6 ${
         isScrolled ? "pt-4" : "pt-6"
       }`}
@@ -79,7 +79,7 @@ const Navigation = () => {
                   <motion.div
                     layoutId="active-nav-indicator"
                     className="absolute inset-0 bg-primary/10 border border-primary/20 rounded-full pointer-events-none shadow-[0_0_15px_rgba(0,240,255,0.15)]"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 30, mass: 1 }}
                   />
                 )}
                 <span className="relative z-10">{link.label}</span>
@@ -149,10 +149,10 @@ const Navigation = () => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
+            initial={{ opacity: 0, y: -30, scale: 0.95, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: -10, scale: 0.95, filter: "blur(8px)" }}
+            transition={{ type: "spring", stiffness: 300, damping: 30, mass: 1 }}
             className="md:hidden absolute top-[80px] left-4 right-4 glass-panel border border-white/10 rounded-2xl overflow-hidden shadow-2xl bg-[#090b14]/95 backdrop-blur-3xl"
           >
             <nav className="flex flex-col p-3 space-y-1">
