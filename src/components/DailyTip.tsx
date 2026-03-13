@@ -28,10 +28,10 @@ const DailyTip = () => {
         <AnimatePresence>
             {isVisible && (
                 <motion.div
-                    initial={{ opacity: 0, x: -50, scale: 0.9 }}
+                    initial={{ opacity: 0, x: 50, scale: 0.9 }}
                     animate={{ opacity: 1, x: 0, scale: 1 }}
-                    exit={{ opacity: 0, x: -50, scale: 0.9 }}
-                    className="fixed bottom-6 left-6 z-40 max-w-sm"
+                    exit={{ opacity: 0, x: 50, scale: 0.9 }}
+                    className="fixed bottom-6 right-6 z-40 max-w-sm"
                 >
                     <div className="glass-panel p-4 rounded-xl border-l-4 border-primary shadow-lg relative overflow-hidden group">
                         <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />

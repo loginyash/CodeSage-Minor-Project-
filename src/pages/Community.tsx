@@ -76,10 +76,10 @@ const Community = () => {
                     </div>
 
                     {/* Create Post Section */}
-                    <div className="glass-panel p-6 rounded-2xl mb-8">
+                    <div className="glass-panel p-4 md:p-6 rounded-2xl mb-8">
                         <form onSubmit={handleCreatePost} className="space-y-4">
-                            <div className="flex gap-4">
-                                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                            <div className="flex flex-col sm:flex-row gap-4">
+                                <div className="hidden sm:flex w-10 h-10 rounded-full bg-primary/20 items-center justify-center flex-shrink-0">
                                     <span className="font-bold text-primary">
                                         {user?.name?.[0]?.toUpperCase() || "?"}
                                     </span>
@@ -89,7 +89,7 @@ const Community = () => {
                                         placeholder="What's on your mind? Share a tip, question, or achievement..."
                                         value={newPostContent}
                                         onChange={(e) => setNewPostContent(e.target.value)}
-                                        className="bg-white/5 border-white/10 min-h-[100px] focus:ring-primary"
+                                        className="bg-white/5 border-white/10 min-h-[100px] sm:min-h-[80px] focus:ring-primary w-full"
                                     />
                                 </div>
                             </div>
@@ -97,7 +97,7 @@ const Community = () => {
                                 <Button
                                     type="submit"
                                     disabled={isSubmitting || !newPostContent.trim()}
-                                    className="bg-primary hover:bg-primary/90"
+                                    className="bg-primary hover:bg-primary/90 w-full sm:w-auto"
                                 >
                                     {isSubmitting ? "Posting..." : (
                                         <>
@@ -111,7 +111,7 @@ const Community = () => {
                     </div>
 
                     {/* Posts Feed */}
-                    <div className="space-y-6">
+                    <div className="space-y-4 md:space-y-6">
                         {isLoading ? (
                             <div className="text-center py-12">Loading community...</div>
                         ) : posts.length === 0 ? (
@@ -124,20 +124,25 @@ const Community = () => {
                                     key={post.id}
                                     initial={{ opacity: 0, scale: 0.95 }}
                                     animate={{ opacity: 1, scale: 1 }}
-                                    className="glass-panel p-6 rounded-2xl hover:border-primary/30 transition-colors"
+                                    className="glass-panel p-4 md:p-6 rounded-2xl hover:border-primary/30 transition-colors"
                                 >
-                                    <div className="flex items-start gap-4">
-                                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center flex-shrink-0 text-white font-bold">
+                                    <div className="flex flex-col sm:flex-row items-start gap-3 md:gap-4">
+                                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 hidden sm:flex items-center justify-center flex-shrink-0 text-white font-bold">
                                             {post.author[0].toUpperCase()}
                                         </div>
-                                        <div className="flex-1">
+                                        <div className="flex-1 w-full">
                                             <div className="flex items-center justify-between mb-2">
-                                                <h3 className="font-semibold text-lg">{post.author}</h3>
-                                                <span className="text-sm text-muted-foreground">
+                                                <div className="flex items-center gap-2">
+                                                    <div className="w-6 h-6 sm:hidden rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center flex-shrink-0 text-white font-bold text-xs">
+                                                        {post.author[0].toUpperCase()}
+                                                    </div>
+                                                    <h3 className="font-semibold text-base md:text-lg">{post.author}</h3>
+                                                </div>
+                                                <span className="text-xs md:text-sm text-muted-foreground">
                                                     {new Date(post.createdAt).toLocaleDateString()}
                                                 </span>
                                             </div>
-                                            <p className="text-gray-300 mb-4 whitespace-pre-wrap">{post.content}</p>
+                                            <p className="text-sm md:text-base text-gray-300 mb-4 whitespace-pre-wrap">{post.content}</p>
 
                                             <div className="flex items-center gap-6 text-sm text-muted-foreground">
                                                 <button className="flex items-center gap-2 hover:text-primary transition-colors">

@@ -120,7 +120,7 @@ const EncouragementSection = () => {
             Learning to code can feel overwhelming sometimes. Here are some gentle reminders to keep you motivated:
           </motion.p>
         </div>
-        <div className="grid md:grid-cols-2 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           {encouragements.map((item, index) => (
             <motion.div
               key={index}

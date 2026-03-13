@@ -38,14 +38,14 @@ const Navigation = () => {
         }`}
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 group">
+        <Link to="/" className="flex items-center gap-2 group flex-shrink-0">
           <motion.div
             whileHover={{ rotate: 360 }}
             transition={{ duration: 0.5 }}
           >
-            <Code className="h-8 w-8 text-primary" />
+            <Code className="h-6 w-6 md:h-8 md:w-8 text-primary" />
           </motion.div>
-          <span className="text-2xl font-bold gradient-hero bg-clip-text text-transparent group-hover:opacity-80 transition-opacity">
+          <span className="text-xl md:text-2xl font-bold gradient-hero bg-clip-text text-transparent group-hover:opacity-80 transition-opacity">
             CodeSage
           </span>
         </Link>
