@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageSquare, Send, X, Code, User, Sparkles } from "lucide-react";
+import { MessageSquare, Send, X, Code, User, Sparkles, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -75,7 +75,7 @@ const CodeSageBot = () => {
     };
 
     return (
-        <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4">
+        <div className="fixed bottom-6 left-6 z-50 flex flex-col items-start gap-4">
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
@@ -88,7 +88,7 @@ const CodeSageBot = () => {
                         <div className="p-4 border-b border-white/10 bg-primary/10 flex items-center justify-between">
                             <div className="flex items-center gap-2">
                                 <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                                    <Code className="w-5 h-5 text-white" />
+                                    <Bot className="w-5 h-5 text-white" />
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-sm">Code Sage AI</h3>
@@ -179,10 +179,18 @@ const CodeSageBot = () => {
             <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
+                animate={{ 
+                    y: [0, -8, 0],
+                }}
+                transition={{ 
+                    duration: 2.5, 
+                    repeat: Infinity, 
+                    ease: "easeInOut" 
+                }}
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-14 h-14 rounded-full bg-gradient-to-r from-primary to-purple-600 shadow-lg shadow-primary/25 flex items-center justify-center text-white border-2 border-white/20"
+                className="w-14 h-14 rounded-full bg-gradient-to-r from-primary to-purple-600 shadow-[0_0_20px_rgba(0,240,255,0.4)] flex items-center justify-center text-white border-2 border-white/20 hover:shadow-[0_0_30px_rgba(0,240,255,0.6)] transition-shadow"
             >
-                {isOpen ? <X className="w-6 h-6" /> : <Code className="w-6 h-6" />}
+                {isOpen ? <X className="w-6 h-6" /> : <Bot className="w-6 h-6" />}
             </motion.button>
         </div>
     );
