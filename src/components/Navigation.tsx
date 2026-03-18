@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { User, LogOut, Menu, X, Flame, Code } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const navLinks = [
   { path: "/", label: "Home" },
@@ -46,8 +47,8 @@ const Navigation = () => {
       }`}
     >
       <div 
-        className={`mx-auto container max-w-5xl rounded-full border border-white/10 bg-black/40 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex items-center justify-between px-4 sm:px-6 py-3 transition-all duration-500 ${
-          isScrolled ? "bg-black/60 shadow-[0_8px_32px_rgba(0,240,255,0.08)] border-white/20" : ""
+        className={`mx-auto container max-w-5xl rounded-full border border-border/50 bg-background/80 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.25)] flex items-center justify-between px-4 sm:px-6 py-3 transition-all duration-500 ${
+          isScrolled ? "bg-background/95 shadow-[0_8px_32px_rgba(0,0,0,0.15)] border-border" : ""
         }`}
       >
         <Link to="/" className="flex items-center gap-2 group flex-shrink-0">
@@ -72,7 +73,7 @@ const Navigation = () => {
                 key={link.path}
                 to={link.path}
                 className={`relative px-4 py-2 text-sm font-semibold transition-colors rounded-full ${
-                  active ? "text-primary" : "text-gray-400 hover:text-gray-100 hover:bg-white/5"
+                  active ? "text-primary" : "text-muted-foreground hover:text-foreground hover:bg-foreground/5"
                 }`}
               >
                 {active && (
@@ -89,6 +90,7 @@ const Navigation = () => {
         </nav>
 
         <div className="hidden md:flex items-center gap-4">
+          <ThemeToggle />
           {user ? (
             <div className="flex items-center gap-4">
               <motion.div
@@ -137,12 +139,15 @@ const Navigation = () => {
         </div>
 
         {/* Mobile Menu Button */}
-        <button
-          className="md:hidden p-2 text-gray-300 hover:text-white transition-colors"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? <X /> : <Menu />}
-        </button>
+        <div className="md:hidden flex items-center gap-2">
+          <ThemeToggle />
+          <button
+            className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X /> : <Menu />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu Dropdown */}
@@ -153,7 +158,7 @@ const Navigation = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden absolute top-[80px] left-4 right-4 glass-panel border border-white/10 rounded-2xl overflow-hidden shadow-2xl bg-[#090b14]/95 backdrop-blur-3xl"
+            className="md:hidden absolute top-[80px] left-4 right-4 bg-background/95 border border-border backdrop-blur-3xl rounded-2xl overflow-hidden shadow-2xl"
           >
             <nav className="flex flex-col p-3 space-y-1">
               {navLinks.map((link) => {

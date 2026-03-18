@@ -1,67 +1,73 @@
-# Code Sage - Major Project
+# CodeSage — Interactive Coding Learning Platform
 
-**Submitted in partial fulfillment of the requirements for the degree of Bachelor of Technology**
-
----
-
-## 👨‍🎓 Project Team
-
-| Name | Roll Number | Role |
-|------|-------------|------|
-| [Your Name] | [Your Roll No] | Full Stack Developer |
-| [Teammate Name] | [Roll No] | Frontend Developer |
-| [Teammate Name] | [Roll No] | Backend Developer |
-
-**Under the Guidance of:**
-**Prof. [Mentor Name]**
-Department of Computer Science
+**Minor Project · B.Tech Computer Science & Engineering · 2022–2026**
 
 ---
 
-## 📖 Abstract
+## 👨‍💻 Project Team
 
-Code Sage is an interactive e-learning platform designed to democratize coding education. It addresses the gap in personalized learning by integrating an AI-powered tutor, interactive coding environments, and gamified learning paths. The project aims to provide a comprehensive solution for students to learn, practice, and master programming languages.
+| Name | Role |
+|------|------|
+| Yashvardhan Acharya | Full Stack Developer |
+| Vinay Bhati | Backend Developer |
+| Sandeep Singh | Frontend Developer |
+| Vinay Sharma | AI & ML Integration |
+
+**Department of Computer Science & Engineering**
+**B.Tech 2022–2026 Batch**
+
+---
+
+## 📖 About
+
+CodeSage is an interactive e-learning platform built to make coding education accessible and engaging. It combines an AI-powered tutor, a browser-based code editor, gamified learning paths, and a community forum — giving students everything they need to learn, practice, and grow as developers.
 
 ## 🚀 Features
 
--   **Interactive Code Editor**: A full-featured, browser-based IDE supporting Python, JavaScript, C++, and Java.
--   **AI Personal Tutor**: Integrated Gemini Pro AI for real-time doubt clearance and code explanation.
--   **Gamified Learning**: Progress tracking, badges, and daily streaks to maintain motivation.
--   **Video Tutorials**: Curated video content for visual learners.
--   **Community Forum**: A space for peer-to-peer learning and discussion.
+- **Interactive Code Editor** — browser-based IDE supporting Python, JavaScript, C++, and Java
+- **AI Personal Tutor** — powered by Google Gemini for real-time doubt clearing and code explanations
+- **Gamified Learning** — progress tracking, daily streaks, and structured learning paths
+- **Video Tutorials** — curated content for visual learners
+- **Community Forum** — peer-to-peer discussion and collaboration
+- **Analytics Dashboard** — track your learning activity and progress over time
 
-## 🛠️ Technology Stack
+## 🛠️ Tech Stack
 
--   **Frontend**: React.js, TypeScript, Tailwind CSS
--   **Backend**: Python (Flask)
--   **Database**: SQLite (Prototype) / PostgreSQL
--   **AI Integration**: Google Gemini API
--   **Authentication**: Google Firebase
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React 18, TypeScript, Tailwind CSS, Framer Motion |
+| Backend | Python, Flask |
+| Database | SQLite / PostgreSQL |
+| AI | Google Gemini API |
+| Auth | Firebase Authentication |
 
-## ⚙️ Setup Instructions
+## ⚙️ Running Locally
 
-1.  **Clone the Repo**:
-    ```bash
-    git clone https://github.com/your-username/code-sage.git
-    ```
-2.  **Backend Setup**:
-    ```bash
-    cd backend
-    pip install -r requirements.txt
-    python run.py
-    ```
-3.  **Frontend Setup**:
-    ```bash
-    npm install
-    npm run dev
-    ```
+### Backend
+```bash
+cd backend
+pip install -r requirements.txt
+python run.py
+```
 
-## 📝 Future Scope
+### Frontend
+```bash
+npm install
+npm run dev
+```
 
--   Integration of a compiler for more languages.
--   Mobile application development.
--   Peer programming features.
+Make sure to create a `backend/.env` file with:
+```
+GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+## 📌 Future Scope
+
+- Mobile application
+- More language support in the code editor
+- Peer programming / pair coding features
+- Offline mode with downloadable lessons
 
 ---
-*Department of Computer Science & Engineering*
-*2025*
+
+*Department of Computer Science & Engineering · Minor Project · 2026*

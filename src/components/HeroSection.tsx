@@ -136,22 +136,22 @@ const HeroSection = () => {
               style={{ rotateX, rotateY }}
               className="w-full max-w-lg cursor-grab active:cursor-grabbing z-10"
             >
-              <div className="cyber-card rounded-md shadow-[0_0_30px_rgba(0,240,255,0.15)] border-t-2 border-t-cyber-cyan border-b-2 border-b-cyber-pink overflow-hidden bg-black/80">
+              <div className="cyber-card rounded-md shadow-[0_0_30px_rgba(99,102,241,0.15)] border-t-2 border-t-primary border-b-2 border-b-secondary overflow-hidden bg-card">
                 {/* Editor Header */}
-                <div className="flex items-center px-4 py-3 bg-[#0d1117] border-b border-cyber-cyan/30">
+                <div className="flex items-center px-4 py-3 bg-muted border-b border-border">
                   <div className="flex gap-2">
-                    <div className="w-3 h-3 rounded-full bg-cyber-pink shadow-[0_0_8px_rgba(255,0,60,0.8)]" />
-                    <div className="w-3 h-3 rounded-full bg-cyber-yellow shadow-[0_0_8px_rgba(252,238,10,0.8)]" />
-                    <div className="w-3 h-3 rounded-full bg-cyber-cyan shadow-[0_0_8px_rgba(0,240,255,0.8)]" />
+                    <div className="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_6px_rgba(239,68,68,0.8)]" />
+                    <div className="w-3 h-3 rounded-full bg-yellow-400 shadow-[0_0_6px_rgba(250,204,21,0.8)]" />
+                    <div className="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_6px_rgba(34,197,94,0.8)]" />
                   </div>
-                  <div className="mx-auto flex items-center gap-2 text-xs font-mono text-cyber-cyan/70">
+                  <div className="mx-auto flex items-center gap-2 text-xs font-mono text-muted-foreground">
                     <Terminal className="w-3 h-3" />
                     system_override.ts
                   </div>
                 </div>
                 
                 {/* Editor Body */}
-                <div className="p-6 font-mono text-sm sm:text-base leading-relaxed overflow-x-auto text-gray-300">
+                <div className="p-6 font-mono text-sm sm:text-base leading-relaxed overflow-x-auto text-foreground/80">
                   <motion.div
                     initial="hidden"
                     animate="visible"
@@ -174,7 +174,7 @@ const HeroSection = () => {
                         }}
                         className="flex gap-4 group cursor-text"
                       >
-                        <span className="text-cyber-cyan/30 select-none w-4 text-right">{code.line}</span>
+                        <span className="text-primary/40 select-none w-4 text-right">{code.line}</span>
                         <motion.span 
                           className="group-hover:text-white transition-colors"
                           whileHover={{ textShadow: "0 0 8px rgba(255,255,255,0.5)" }}
@@ -195,8 +195,8 @@ const HeroSection = () => {
                     transition={{ delay: 2, repeat: Infinity, repeatType: "reverse", duration: 0.8 }}
                     className="flex gap-4 mt-2"
                   >
-                    <span className="text-cyber-cyan/30 select-none w-4 text-right">9</span>
-                    <span className="w-2.5 h-5 bg-cyber-cyan inline-block shadow-[0_0_10px_rgba(0,240,255,0.8)]" />
+                    <span className="text-primary/40 select-none w-4 text-right">9</span>
+                    <span className="w-2.5 h-5 bg-primary inline-block shadow-[0_0_10px_rgba(99,102,241,0.8)] animate-pulse" />
                   </motion.div>
                 </div>
               </div>

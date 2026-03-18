@@ -56,7 +56,8 @@ const CodeEditorWindow = ({ height = "calc(100vh - 100px)" }: CodeEditorWindowPr
         setIsRunning(true);
         setOutput("");
         try {
-            const response = await axios.post("https://emkc.org/api/v2/piston/execute", {
+            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+            const response = await axios.post(`${API_URL}/api/execute/run`, {
                 language: language,
                 version: LANGUAGES[language].version,
                 files: [
@@ -69,7 +70,7 @@ const CodeEditorWindow = ({ height = "calc(100vh - 100px)" }: CodeEditorWindowPr
             const { run } = response.data;
             setOutput(run.output || (run.stderr ? `Error: ${run.stderr}` : "No output"));
         } catch (error: any) {
-            setOutput(`Error: ${error.message || "Failed to execute code"}`);
+            setOutput(`Error: ${error.response?.data?.error || error.message || "Failed to execute code"}`);
         } finally {
             setIsRunning(false);
         }

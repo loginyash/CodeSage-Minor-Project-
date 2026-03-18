@@ -6,6 +6,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { AnimatePresence, motion } from "framer-motion";
+import { ThemeProvider } from "@/contexts/ThemeContext";
+import CodeSageBot from "@/components/CodeSageBot";
+import DailyTip from "@/components/DailyTip";
 
 // Lazy-loaded pages
 const Index = lazy(() => import("./pages/Index"));
@@ -76,19 +79,24 @@ const LoadingFallback = () => (
 );
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <AuthProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Suspense fallback={<LoadingFallback />}>
-            <AnimatedRoutes />
-          </Suspense>
-        </BrowserRouter>
-      </AuthProvider>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <AuthProvider>
+          <Toaster />
+          <Sonner />
+          {/* Global fixed overlays — always visible on every page */}
+          <DailyTip />
+          <CodeSageBot />
+          <BrowserRouter>
+            <Suspense fallback={<LoadingFallback />}>
+              <AnimatedRoutes />
+            </Suspense>
+          </BrowserRouter>
+        </AuthProvider>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </ThemeProvider>
 );
 
 export default App;
