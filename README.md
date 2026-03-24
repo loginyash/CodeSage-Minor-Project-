@@ -8,10 +8,10 @@
 
 | Name | Role |
 |------|------|
-| Yashvardhan Acharya | Full Stack Developer |
+| Yashvardhan Acharya | Api Integration |
 | Vinay Bhati | Backend Developer |
 | Sandeep Singh | Frontend Developer |
-| Vinay Sharma | AI & ML Integration |
+| Vinay Sharma | Debugging and Deployment |
 
 **Department of Computer Science & Engineering**
 **B.Tech 2022–2026 Batch**
