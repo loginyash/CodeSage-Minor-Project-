@@ -8,7 +8,7 @@
 
 | Name | Role |
 |------|------|
-| Yashvardhan Acharya | Api Integration |
+| Yashvardhan Acharya | API Integration & AI Chatbot Integration  |
 | Vinay Bhati | Backend Developer |
 | Sandeep Singh | Frontend Developer |
 | Vinay Sharma | Debugging and Deployment |
